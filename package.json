@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "webpack --config ./test/webpack.config.js",
+    "build-example": "webpack --config ./example/webpack.config.js",
     "flow": "flow"
   },
   "keywords": [],
