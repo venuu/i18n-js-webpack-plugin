@@ -70,7 +70,7 @@ MIT
 
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[build-badge]: https://travis-ci.org/venuu/@venuu/i18n-js-webpack-plugin.svg?branch=master
-[build]: https://travis-ci.org/venuu/@venuu/i18n-js-webpack-plugin
+[build-badge]: https://travis-ci.org/venuu/i18n-js-webpack-plugin.svg?branch=master
+[build]: https://travis-ci.org/venuu/i18n-js-webpack-plugin
 
 <!-- prettier-ignore-end -->
