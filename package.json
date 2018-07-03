@@ -1,6 +1,6 @@
 {
   "name": "@venuu/i18n-js-webpack-plugin",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "webpack companion plugin for i18n-js to include only used translations",
   "main": "index.js",
   "homepage": "https://github.com/venuu/i18n-js-webpack-plugin",
