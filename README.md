@@ -2,6 +2,10 @@
 
 A webpack companion plugin for [`i18n-js`](https://github.com/fnando/i18n-js/). Output only the translations your code is actually using to your bundle.
 
+<hr />
+
+[![Build Status][build-badge]][build]
+
 ## Installation
 
 This module is distributed via [npm][npm] which is bundled with [node][node] and
@@ -66,5 +70,6 @@ MIT
 
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
+[build-badge]: https://img.shields.io/travis/venuu/i18n-js-webpack-plugin.svg?style=flat-square
 
 <!-- prettier-ignore-end -->
