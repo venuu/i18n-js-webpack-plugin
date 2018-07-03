@@ -12,6 +12,7 @@
   "keywords": ["webpack", "i18n", "i18n-js", "rails", "ruby-on-rails"],
   "author": "Vesa Laakso <laakso.vesa@gmail.com>",
   "license": "MIT",
+  "files": ["lib"],
   "devDependencies": {
     "flow-bin": "^0.75.0",
     "i18n-js": "^3.0.10",
