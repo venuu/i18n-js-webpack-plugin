@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build-example": "webpack --config ./example/webpack.config.js",
-    "flow": "flow"
+    "flow": "flow",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Vesa Laakso <laakso.vesa@gmail.com>",
