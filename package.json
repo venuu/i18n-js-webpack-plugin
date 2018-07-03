@@ -17,5 +17,10 @@
   },
   "peerDependencies": {
     "webpack": "^4.14.0"
+  },
+  "dependencies": {
+    "baconjs": "^0.7.95",
+    "lodash": "^4.17.10",
+    "ramda": "^0.24.1"
   }
 }
