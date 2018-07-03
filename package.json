@@ -1,5 +1,5 @@
 {
-  "name": "i18n-js-runtime-webpack-plugin",
+  "name": "webpack-i18n-js-plugin",
   "version": "1.0.0-alpha.1",
   "description": "webpack companion plugin for i18n-js to include only used translations",
   "main": "index.js",
