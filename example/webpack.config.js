@@ -24,10 +24,5 @@ module.exports = {
   ],
   devtool: false,
   externals: [nodeExternals()],
-  optimization: {
-    runtimeChunk: {
-      name: "runtimeChunk"
-    }
-  },
   mode: "development"
 };
