@@ -1,4 +1,4 @@
-# webpack-i18n-js-plugin
+# @venuu/i18n-js-webpack-plugin
 
 A webpack companion plugin for [`i18n-js`](https://github.com/fnando/i18n-js/). Output only the translations your code is actually using to your bundle.
 
@@ -12,7 +12,7 @@ This module is distributed via [npm][npm] which is bundled with [node][node] and
 should be installed as one of your project's `dependencies`:
 
 ```
-npm install --save webpack-i18n-js-plugin
+npm install --save @venuu/i18n-js-webpack-plugin
 ```
 
 This library has a `peerDependencies` listing for webpack 4.
@@ -22,7 +22,7 @@ This library has a `peerDependencies` listing for webpack 4.
 ```javascript
 // webpack.config.js
 
-const { I18nRuntimePlugin } = require("webpack-i18n-js-plugin");
+const { I18nRuntimePlugin } = require("@venuu/i18n-js-webpack-plugin");
 
 module.exports = {
   // ...rest of your config
@@ -70,7 +70,7 @@ MIT
 
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[build-badge]: https://travis-ci.org/venuu/webpack-i18n-js-plugin.svg?branch=master
-[build]: https://travis-ci.org/venuu/webpack-i18n-js-plugin
+[build-badge]: https://travis-ci.org/venuu/@venuu/i18n-js-webpack-plugin.svg?branch=master
+[build]: https://travis-ci.org/venuu/@venuu/i18n-js-webpack-plugin
 
 <!-- prettier-ignore-end -->
