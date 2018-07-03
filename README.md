@@ -71,5 +71,6 @@ MIT
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
 [build-badge]: https://img.shields.io/travis/venuu/i18n-js-webpack-plugin.svg?style=flat-square
+[build]: https://travis-ci.org/venuu/i18n-js-webpack-plugin
 
 <!-- prettier-ignore-end -->
