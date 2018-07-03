@@ -10,6 +10,10 @@
   "author": "Vesa Laakso <laakso.vesa@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "i18n-js": "^3.0.10"
+    "i18n-js": "^3.0.10",
+    "webpack": "^4.14.0"
+  },
+  "peerDependencies": {
+    "webpack": "^4.14.0"
   }
 }
