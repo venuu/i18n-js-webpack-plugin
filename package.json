@@ -1,18 +1,25 @@
 {
-  "name": "i18n-js-webpack-plugin",
+  "name": "i18n-js-runtime-webpack-plugin",
   "version": "1.0.0-alpha.1",
-  "description":
-    "webpack companion plugin for i18n-js to include only used translations",
+  "description": "webpack companion plugin for i18n-js to include only used translations",
   "main": "index.js",
   "scripts": {
     "build-example": "webpack --config ./example/webpack.config.js",
     "flow": "flow",
     "test": "jest"
   },
-  "keywords": ["webpack", "i18n", "i18n-js", "rails", "ruby-on-rails"],
+  "keywords": [
+    "webpack",
+    "i18n",
+    "i18n-js",
+    "rails",
+    "ruby-on-rails"
+  ],
   "author": "Vesa Laakso <laakso.vesa@gmail.com>",
   "license": "MIT",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "devDependencies": {
     "flow-bin": "^0.75.0",
     "i18n-js": "^3.0.10",
