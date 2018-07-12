@@ -82,3 +82,46 @@ test("with ESM in entry point works", async () => {
     en: "Europe"
   });
 });
+
+// FIXME: Make it work with .mjs somehow. Help wanted!
+test("importing .mjs modules does not work", async () => {
+  const pluginConfig = {
+    fullTranslations: {
+      en: { europe: "Europe" },
+      fi: { europe: "Eurooppa" }
+    },
+    functionNames: ["I18n.t"],
+    translationPlaceholderConstantName: "I18N_RUNTIME_TRANSLATIONS"
+  };
+
+  try {
+    await compile({
+      plugin: new I18nRuntimePlugin(pluginConfig),
+
+      modules: {
+        "strictEsm.mjs": `
+          export const en = I18n.t("europe", { locale: "en" });
+          export const fi = I18n.t("europe", { locale: "fi" });
+        `
+      },
+
+      entryCode: `
+        import I18n from "i18n-js";
+        import * as data from './strictEsm';
+
+        window.I18n = I18n;
+        I18n.locale = 'en';
+        I18n.translations = I18N_RUNTIME_TRANSLATIONS;
+
+        window.testData = { fi: data.fi, en: data.en };
+      `
+    });
+    throw new Error("Expected compilation to fail but it did not");
+  } catch (err) {
+    if (err.message && err.message.match(/Expected compilation to fail/)) {
+      throw err;
+    }
+    // We expected this error, just log it for debugging purposes
+    console.error(err);
+  }
+});
