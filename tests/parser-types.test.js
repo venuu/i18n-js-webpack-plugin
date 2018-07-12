@@ -122,6 +122,6 @@ test("importing .mjs modules does not work", async () => {
       throw err;
     }
     // We expected this error, just log it for debugging purposes
-    console.error(err);
+    console.warn("This compilation failure was expected:\n\n" + err);
   }
 });
