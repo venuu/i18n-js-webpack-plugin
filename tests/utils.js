@@ -55,8 +55,7 @@ exports.compile = async function compile(
       const info = stats.toJson();
 
       if (stats.hasErrors()) {
-        console.error(info.errors.join("\n"));
-        return reject("webpack compilation failed");
+        return reject(info.errors.join("\n"));
       }
 
       if (stats.hasWarnings()) {
