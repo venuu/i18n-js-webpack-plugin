@@ -60,7 +60,7 @@ test("deep nested objects work", async () => {
   });
 });
 
-test("arrays are exported, even if I18n.t would fail on them", async () => {
+test("arrays are exported", async () => {
   await compile({
     plugin: new I18nRuntimePlugin(pluginConfig),
 
@@ -75,16 +75,13 @@ test("arrays are exported, even if I18n.t would fail on them", async () => {
       I18n.locale = 'fi';
       I18n.translations = I18N_RUNTIME_TRANSLATIONS;
 
-      try { window.testData = { deepArray: require("./deepArray") }; } catch (e) {}
+      window.testData = { deepArray: require("./deepArray") };
     `
   });
 
-  // I18n.translate fails for arrays, but we can test for I18n.translations being set
-  // properly anyway
+  expect(window.testData).toEqual({ deepArray: [4, 5, 6] });
   expect(window.I18n.translations.fi.deep.array).toEqual([4, 5, 6]);
   expect(window.I18n.translations.en.deep.array).toEqual([1, 2, 3]);
-  // This should not be undefined, but i18n-js gets borken
-  expect(window.testData).toBeUndefined();
 });
 
 test("null works, even if I18n.t considers it missing", async () => {
