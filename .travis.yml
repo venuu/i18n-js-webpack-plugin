@@ -9,7 +9,7 @@ node_js:
   - "node"
 cache:
   - directories:
-    - node_modules
+      - node_modules
 script:
   - npm run flow -- check
   - npm run test
