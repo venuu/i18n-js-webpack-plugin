@@ -29,7 +29,7 @@
   "devDependencies": {
     "flow-bin": "^0.85.0",
     "i18n-js": "^3.1.0",
-    "jest": "^23.6.0",
+    "jest": "^29.3.1",
     "memory-fs": "^0.4.1",
     "prettier": "^1.14.3",
     "webpack": "^4.23.1",
