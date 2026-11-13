@@ -24,8 +24,10 @@ export type Project = {
 // A directory of source files that can be built more than once, sharing one
 // webpack filesystem cache between the builds.
 export function makeProject(): Project {
-  const root = fs.mkdtempSync(
-    path.join(os.tmpdir(), "i18n-js-webpack-plugin-"),
+  // The real path, as webpack resolves modules through symlinks such as
+  // macOS's /var -> /private/var, and names them relative to the context.
+  const root = fs.realpathSync(
+    fs.mkdtempSync(path.join(os.tmpdir(), "i18n-js-webpack-plugin-")),
   );
   const inputDir = path.join(root, "input");
   fs.mkdirSync(inputDir);
