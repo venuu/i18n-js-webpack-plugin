@@ -1,9 +1,10 @@
-const { compile } = require("./utils");
-const I18nRuntimePlugin = require("../lib/index");
+import { expect, test } from "vitest";
+import { compile } from "./utils";
+import { I18nRuntimePlugin } from "../src";
 
 test("smoke test", async () => {
   await compile({
-    plugin: new I18nRuntimePlugin({
+    plugin: I18nRuntimePlugin({
       fullTranslations: {
         en: { hello_world: "Hello, world!", extra_key: "extra_key content" },
         fi: { hello_world: "Hei, maailma!", extra_key: "extra_key content" },

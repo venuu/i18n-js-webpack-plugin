@@ -1,5 +1,6 @@
-const { compile } = require("./utils");
-const I18nRuntimePlugin = require("../lib/index");
+import { afterEach, expect, test } from "vitest";
+import { compile } from "./utils";
+import { I18nRuntimePlugin } from "../src";
 
 const pluginConfig = {
   fullTranslations: {
@@ -32,7 +33,7 @@ afterEach(() => {
 
 test("deep nested objects work", async () => {
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "deepObj.js": `module.exports = I18n.translate("deep.nested");`,
@@ -60,7 +61,7 @@ test("deep nested objects work", async () => {
 
 test("arrays are exported", async () => {
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "deepArray.js": `module.exports = I18n.translate("deep.array");`,
@@ -84,7 +85,7 @@ test("arrays are exported", async () => {
 
 test("null works, even if I18n.t considers it missing", async () => {
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "null.js": `module.exports = I18n.translate("deep.null");`,
@@ -109,7 +110,7 @@ test("null works, even if I18n.t considers it missing", async () => {
 
 test("booleans work", async () => {
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "true.js": `module.exports = I18n.translate("deep.boolTrue");`,

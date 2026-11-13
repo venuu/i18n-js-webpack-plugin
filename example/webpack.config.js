@@ -1,6 +1,6 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
-const I18nRuntimePlugin = require("../lib/index");
+const { I18nRuntimePlugin } = require("../dist");
 
 module.exports = {
   entry: {
@@ -10,7 +10,7 @@ module.exports = {
     path: path.join(__dirname, "build"),
   },
   plugins: [
-    new I18nRuntimePlugin({
+    I18nRuntimePlugin({
       fullTranslations: {
         en: { hello_world: "Hello, world!" },
         fi: { hello_world: "Hei, maailma!" },

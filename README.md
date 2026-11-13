@@ -13,6 +13,8 @@ npm install --save @venuu/i18n-js-webpack-plugin
 
 This library has a `peerDependencies` listing for webpack 5. Use version 2 of the plugin with webpack 4.
 
+TypeScript types are included: the options type is exported as `I18nRuntimePluginOptions`.
+
 ## Usage
 
 ```javascript
@@ -63,6 +65,14 @@ Only string literals, or expressions webpack can evaluate to a string, are picke
 ## Persistent caching
 
 The plugin works with webpack's [filesystem cache](https://webpack.js.org/configuration/cache/). The keys a module uses are stored with the module in the cache, so a build includes the translations of every module whether it was parsed or restored from the cache. The translations are written in place of the placeholder when the bundle's code is generated, so changes to `fullTranslations` show up without clearing the cache.
+
+## Development
+
+The plugin is written in TypeScript in `src/` and compiled to `dist/`.
+
+- `npm test` type checks the sources and tests, then runs the tests with Vitest.
+- `npm run build` compiles `dist/`. It also runs on `npm install` and before publishing.
+- `npm run build-example` builds the plugin and the example in `example/`.
 
 ## LICENSE
 

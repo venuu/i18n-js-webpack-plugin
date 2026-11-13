@@ -1,5 +1,6 @@
-const { compile } = require("./utils");
-const I18nRuntimePlugin = require("../lib/index");
+import { afterEach, expect, test } from "vitest";
+import { compile } from "./utils";
+import { I18nRuntimePlugin } from "../src";
 
 afterEach(() => {
   delete window.testData;
@@ -26,7 +27,7 @@ test("plural works as it should", async () => {
   };
 
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "oneVenue.js": `module.exports = I18n.t("venue", { count: 1 });`,

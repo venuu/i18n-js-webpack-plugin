@@ -1,5 +1,6 @@
-const { compile } = require("./utils");
-const I18nRuntimePlugin = require("../lib/index");
+import { afterEach, expect, test } from "vitest";
+import { compile } from "./utils";
+import { I18nRuntimePlugin } from "../src";
 
 afterEach(() => {
   delete window.testData;
@@ -16,7 +17,7 @@ test("ESM with javascript/auto works", async () => {
   };
 
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "nonStrictEsm.js": `
@@ -54,7 +55,7 @@ test("with ESM in entry point works", async () => {
   };
 
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "nonStrictEsm.js": `
@@ -92,7 +93,7 @@ test("strict ESM in .mjs modules works", async () => {
   };
 
   await compile({
-    plugin: new I18nRuntimePlugin(pluginConfig),
+    plugin: I18nRuntimePlugin(pluginConfig),
 
     modules: {
       "strictEsm.mjs": `

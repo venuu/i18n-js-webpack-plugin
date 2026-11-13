@@ -1,5 +1,7 @@
-const { makeProject } = require("./utils");
-const I18nRuntimePlugin = require("../lib/index");
+import { afterEach, beforeEach, expect, test } from "vitest";
+import type { Stats } from "webpack";
+import { makeProject, type Project } from "./utils";
+import { I18nRuntimePlugin } from "../src";
 
 const fullTranslations = {
   en: { first: "First", second: "Second", third: "Third" },
@@ -24,7 +26,7 @@ const entryCode = `
   };
 `;
 
-let project;
+let project: Project;
 
 beforeEach(() => {
   project = makeProject();
@@ -41,10 +43,9 @@ afterEach(() => {
   delete window.I18n;
 });
 
-function builtModuleNames(stats) {
-  return stats
-    .toJson({ modules: true })
-    .modules.filter((module) => module.built)
+function builtModuleNames(stats: Stats) {
+  return (stats.toJson({ modules: true }).modules ?? [])
+    .filter((module) => module.built)
     .map((module) => module.name);
 }
 
