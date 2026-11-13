@@ -1,5 +1,3 @@
-/* @flow */
-
 const { compile } = require("./utils");
 const I18nRuntimePlugin = require("../lib/index");
 
@@ -13,18 +11,18 @@ test("plural works as it should", async () => {
       en: {
         venue: {
           one: "one venue",
-          other: "%{count} venues"
-        }
+          other: "%{count} venues",
+        },
       },
       fi: {
         venue: {
           one: "yksi tila",
-          other: "%{count} tilaa"
-        }
-      }
+          other: "%{count} tilaa",
+        },
+      },
     },
     functionNames: ["I18n.t"],
-    translationPlaceholderConstantName: "I18N_RUNTIME_TRANSLATIONS"
+    translationPlaceholderConstantName: "I18N_RUNTIME_TRANSLATIONS",
   };
 
   await compile({
@@ -34,7 +32,7 @@ test("plural works as it should", async () => {
       "oneVenue.js": `module.exports = I18n.t("venue", { count: 1 });`,
       "tenVenues.js": `module.exports = I18n.t("venue", { count: 10 });`,
       "oneFiVenue.js": `module.exports = I18n.t("venue", { count: 1, locale: 'fi' });`,
-      "tenFiVenues.js": `module.exports = I18n.t("venue", { count: 10, locale: 'fi' });`
+      "tenFiVenues.js": `module.exports = I18n.t("venue", { count: 10, locale: 'fi' });`,
     },
 
     entryCode: `
@@ -50,13 +48,13 @@ test("plural works as it should", async () => {
         oneFiVenue: require("./oneFiVenue"),
         tenFiVenues: require("./tenFiVenues")
       };
-    `
+    `,
   });
 
   expect(window.testData).toEqual({
     oneVenue: "one venue",
     tenVenues: "10 venues",
     oneFiVenue: "yksi tila",
-    tenFiVenues: "10 tilaa"
+    tenFiVenues: "10 tilaa",
   });
 });

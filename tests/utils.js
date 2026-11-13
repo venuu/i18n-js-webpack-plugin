@@ -1,71 +1,93 @@
-// @flow
-
-/*:: import typeof nodeFsType from 'fs'; */
-
-const webpack = require("webpack");
-const MemoryFS = require("memory-fs");
+const fs = require("fs");
+const os = require("os");
 const path = require("path");
+const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 
-/*::
-type CompileArgs = {|
-  entryCode: string,
-  modules: { [path: string]: string },
-  plugin: any
-|};
-*/
+// A directory of source files that can be built more than once, sharing one
+// webpack filesystem cache between the builds.
+exports.makeProject = function makeProject() {
+  const root = fs.mkdtempSync(
+    path.join(os.tmpdir(), "i18n-js-webpack-plugin-"),
+  );
+  const inputDir = path.join(root, "input");
+  fs.mkdirSync(inputDir);
 
-exports.compile = async function compile(
-  { entryCode, modules, plugin } /*: CompileArgs */
-) {
-  const webpackConfig = {
-    entry: {
-      entry: "/input/ENTRY_POINT.js"
+  return {
+    writeModules(modules) {
+      for (const [file, code] of Object.entries(modules)) {
+        fs.writeFileSync(path.join(inputDir, file), code);
+      }
     },
-    output: {
-      path: "/output/"
+
+    // Builds the entry point and evaluates the bundle. Returns the webpack
+    // stats of the build.
+    build({ plugin, cache = false }) {
+      return runWebpack({
+        entry: path.join(inputDir, "ENTRY_POINT.js"),
+        context: root,
+        output: { path: path.join(root, "output") },
+        plugins: [plugin],
+        externals: [nodeExternals()],
+        devtool: false,
+        mode: "development",
+        cache: cache
+          ? { type: "filesystem", cacheDirectory: path.join(root, "cache") }
+          : false,
+        // Content hashes notice changes that happen within the timestamp
+        // accuracy of the file system, as they do between test builds.
+        snapshot: {
+          module: { hash: true },
+          resolve: { hash: true },
+        },
+      }).then((stats) => {
+        const code = fs.readFileSync(
+          path.join(root, "output", "main.js"),
+          "utf8",
+        );
+        eval(code);
+        return stats;
+      });
     },
-    plugins: [plugin],
-    externals: [nodeExternals()],
-    devtool: false,
-    mode: "development"
+
+    remove() {
+      fs.rmSync(root, { recursive: true, force: true });
+    },
   };
+};
 
-  const fs /*: nodeFsType */ = new MemoryFS();
-  fs.mkdirSync("/input");
-  for (const path of Object.keys(modules)) {
-    fs.writeFileSync(`/input/${path}`, modules[path]);
+exports.compile = async function compile({ entryCode, modules, plugin }) {
+  const project = exports.makeProject();
+  try {
+    project.writeModules({ ...modules, "ENTRY_POINT.js": entryCode });
+    await project.build({ plugin });
+  } finally {
+    project.remove();
   }
-  fs.writeFileSync("/input/ENTRY_POINT.js", entryCode);
+};
 
-  const compiler = webpack(webpackConfig);
-  compiler.inputFileSystem = fs;
-  compiler.outputFileSystem = fs;
+function runWebpack(config) {
+  const compiler = webpack(config);
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
-      if (err) {
-        console.error(err.stack || err);
-        if (err.details) {
-          console.error(err.details);
+      // Closing the compiler writes the filesystem cache.
+      compiler.close((closeErr) => {
+        if (err || closeErr) {
+          return reject(err || closeErr);
         }
-        return reject("webpack compilation failed");
-      }
-
-      const info = stats.toJson();
-
-      if (stats.hasErrors()) {
-        return reject(info.errors.join("\n"));
-      }
-
-      if (stats.hasWarnings()) {
-        console.warn(info.warnings);
-      }
-
-      const code = fs.readFileSync("/output/entry.js", "utf8");
-      eval(code);
-
-      return resolve();
+        if (stats.hasErrors()) {
+          return reject(
+            new Error(
+              stats
+                .toJson({ errors: true })
+                .errors.map((error) => error.message)
+                .join("\n"),
+            ),
+          );
+        }
+        resolve(stats);
+      });
     });
   });
-};
+}
