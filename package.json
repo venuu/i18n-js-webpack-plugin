@@ -7,7 +7,7 @@
   "bugs": "https://github.com/venuu/i18n-js-webpack-plugin/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/venuu/i18n-js-webpack-plugin.git"
+    "url": "git+https://github.com/venuu/i18n-js-webpack-plugin.git"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
