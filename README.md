@@ -2,10 +2,6 @@
 
 A webpack companion plugin for [`i18n-js`](https://github.com/fnando/i18n-js/). Output only the translations your code is actually using to your bundle.
 
-<hr />
-
-[![Build Status][build-badge]][build]
-
 ## Installation
 
 This module is distributed via [npm][npm] which is bundled with [node][node] and
@@ -15,7 +11,9 @@ should be installed as one of your project's `dependencies`:
 npm install --save @venuu/i18n-js-webpack-plugin
 ```
 
-This library has a `peerDependencies` listing for webpack 4.
+This library has a `peerDependencies` listing for webpack 5. Use version 2 of the plugin with webpack 4.
+
+TypeScript types are included: the options type is exported as `I18nRuntimePluginOptions`.
 
 ## Usage
 
@@ -28,20 +26,20 @@ module.exports = {
   // ...rest of your config
   plugins: [
     // ...any other plugins you might have
-    new I18nRuntimePlugin({
+    I18nRuntimePlugin({
       fullTranslations: {
         // Put your entire translations here like below
         en: { hello: { world: "Hello, world!" } },
         fi: { hello: { world: "Hei, maailma!" } },
-        sv: { hello: { world: "Och samma på svenska" } }
+        sv: { hello: { world: "Och samma på svenska" } },
       },
       // Global calls for I18n translations that will be picked up
       functionNames: ["I18n.t", "I18n.translate"],
       // "Free variable" in your code that will be replaced with object containing all
       // used translations.
-      translationPlaceholderConstantName: "I18N_RUNTIME_TRANSLATIONS"
-    })
-  ]
+      translationPlaceholderConstantName: "I18N_RUNTIME_TRANSLATIONS",
+    }),
+  ],
 };
 ```
 
@@ -62,6 +60,20 @@ I18n.translate("hello.world");
 console.log(I18n.t("hello", { locale: "sv" })); // outputs object: { world: 'Hello, world!' }
 ```
 
+Only string literals, or expressions webpack can evaluate to a string, are picked up as keys. A call like `I18n.t(someVariable)` needs its translations included some other way.
+
+## Persistent caching
+
+The plugin works with webpack's [filesystem cache](https://webpack.js.org/configuration/cache/). The keys a module uses are stored with the module in the cache, so a build includes the translations of every module whether it was parsed or restored from the cache. The translations are written in place of the placeholder when the bundle's code is generated, so changes to `fullTranslations` show up without clearing the cache.
+
+## Development
+
+The plugin is written in TypeScript in `src/` and compiled to `dist/`.
+
+- `npm test` type checks the sources and tests, then runs the tests with Vitest.
+- `npm run build` compiles `dist/`. It also runs on `npm install` and before publishing.
+- `npm run build-example` builds the plugin and the example in `example/`.
+
 ## LICENSE
 
 MIT
@@ -70,7 +82,5 @@ MIT
 
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
-[build-badge]: https://travis-ci.org/venuu/i18n-js-webpack-plugin.svg?branch=master
-[build]: https://travis-ci.org/venuu/i18n-js-webpack-plugin
 
 <!-- prettier-ignore-end -->
